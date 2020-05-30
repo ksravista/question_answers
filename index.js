@@ -60,20 +60,26 @@ app.post('/ask_question/p1', (req, res) => {
         s1: question,
         s2: getQuestions()
     };
-
-
+    
     axios.post("https://alistempirefoundation.org:5041/test", toSend).then(response=>{
         
         let rates = response.data.rates.map((rate, i)=> {return {
             index: i,
             similarity: Number(rate)
         }});
-
         //sort based on similarity
         rates.sort((a, b) =>{
             return b.similarity - a.similarity;
         })
-        
+
+        let type = '3';
+        if(rates[0].similarity >= .92){
+            type = '1';
+        }
+        else if(rates[0].similarity >= .5){
+            type = '2';
+        }
+        console.log(rates);
         let questions = [];
         let i;
         for(i = 0; i < 3; i++){
@@ -81,8 +87,10 @@ app.post('/ask_question/p1', (req, res) => {
         }
 
         console.log(questions);
-        let resObj = {};
-
+        let resObj = {
+            type: type
+        };
+        
         let allQs = getQuestions();
         for(i = 0; i< 3; i++){
             resObj["question" + (i+1)] = allQs[questions[i]];
@@ -90,6 +98,8 @@ app.post('/ask_question/p1', (req, res) => {
             resObj["answer" + (i+1)] = getAnswers(questions[i]);
         }
         
+
+
         res.status(200);
         res.json(resObj);
 
