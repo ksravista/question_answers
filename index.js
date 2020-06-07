@@ -7,11 +7,10 @@ axios = axios.create({
   });
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 8080;
 
 app.use(express.json());
 app.use(require("body-parser").json());
-
 function getQuestions(){
 
     return [
@@ -79,14 +78,14 @@ app.post('/ask_question/p1', (req, res) => {
         else if(rates[0].similarity >= .5){
             type = '2';
         }
-        console.log(rates);
+        //console.log(rates);
         let questions = [];
         let i;
         for(i = 0; i < 3; i++){
             questions.push(rates[i].index);
         }
 
-        console.log(questions);
+        //console.log(questions);
         let resObj = {
             type: type
         };
@@ -98,8 +97,6 @@ app.post('/ask_question/p1', (req, res) => {
             resObj["answer" + (i+1)] = getAnswers(questions[i]);
         }
         
-
-
         res.status(200);
         res.json(resObj);
 
@@ -113,4 +110,5 @@ app.post('/ask_question/p1', (req, res) => {
 
 
 app.listen(port, () => console.log(`app listening at http://localhost:${port}`));
+module.exports = app;
 
