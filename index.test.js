@@ -2,6 +2,7 @@ const request = require('supertest');
 const app = require('./index');
 describe('Post Endpoints', () => {
   it('should create a new post', () => {
+    //expect.assertions(1);
     const response = request(app).post({
         headers: {'content-type' : 'application/json'},
         rejectUnauthorized: false, 
