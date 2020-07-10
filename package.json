@@ -4,7 +4,8 @@
   "description": "api for getting the top 3 matched questions and answers them",
   "main": " ",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node index.js"
   },
   "author": "Sravi",
   "license": "ISC",
